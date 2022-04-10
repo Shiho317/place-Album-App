@@ -30,7 +30,7 @@ const Signup = () => {
 
     if(comfirmRef === passwordRef){
       try {
-        await axios.post("/users/signup", newUser);
+        await axios.post("http://localhost:8888/users/signup", newUser);
         alert("You have successfully created account.")
       } catch (error) {
         console.log(error);
