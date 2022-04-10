@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import { 
   BrowserRouter as Router,
   Routes,
@@ -15,12 +15,21 @@ import Login from './Components/Login/Login';
 import Album from './Components/Album/Album';
 import { GlobalStyle } from './styles/Global.style';
 
+export const AppContext = createContext();
+
 
 function App() {
+
+  const myStorage = window.localStorage;
+  const [ currentName, setCurrentName ] = useState(myStorage.getItem("user"));
+
+  const [ loggedIn, setLoggedIn ] = useState(false);
+
   return (
     <React.Fragment>
       <GlobalStyle/>
       <ThemeProvider theme={theme}>
+        <AppContext.Provider value={{currentName, setCurrentName, myStorage, loggedIn, setLoggedIn}}>
         <Router>
           <Header/>
           <Routes>
@@ -31,6 +40,7 @@ function App() {
           </Routes>
           <Footer/>
         </Router>
+        </AppContext.Provider>
       </ThemeProvider>
     </React.Fragment>
   )

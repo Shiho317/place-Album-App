@@ -1,8 +1,33 @@
-import React from 'react'
+import React, { useContext, useRef,  } from 'react'
 import { Link } from 'react-router-dom'
-import { LoginContents, LoginDetails, LoginForm, LoginImage, LoginWrapper } from './Login.style'
+import { LoginContents, LoginDetails, LoginForm, LoginImage, LoginWrapper } from './Login.style';
+import axios from 'axios';
+import { AppContext } from '../../App';
 
 const Login = () => {
+
+  const {setCurrentName, myStorage, setLoggedIn} = useContext(AppContext);
+
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const loginSubmit = async(e) => {
+    e.preventDefault();
+    const user = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+    try {
+      const res = await axios.post("/users/login", user);
+      setCurrentName(res.data.username);
+      myStorage.setItem("user", res.data.username);
+      setLoggedIn(true);
+    } catch (error) {
+      console.log(error);
+      alert('Something went wrong!')
+    }
+  }
+
   return (
     <LoginWrapper>
       <LoginContents>
@@ -11,9 +36,9 @@ const Login = () => {
           </LoginImage>
           <LoginDetails>
             <h1>Welcome, back!</h1>
-            <LoginForm>
-              <input type='email' id='email' placeholder='EMAIL'/>
-              <input type='password' id='password' placeholder='PASSWORD'/>
+            <LoginForm onSubmit={loginSubmit}>
+              <input type='email' id='email' placeholder='EMAIL' ref={emailRef} required/>
+              <input type='password' id='password' min='6' placeholder='PASSWORD' ref={passwordRef} required/>
               <button type='submit'>LOGIN</button>
             </LoginForm>
             <p>

@@ -12,7 +12,7 @@ const HeroHeader = () => {
         </HeroImg>
         <HeroTitle>
           <h1>PLACE + PHOTO = MEMORY</h1>
-          <Link to=''>
+          <Link to='/login'>
             <button>GET STARTED</button>
           </Link>
         </HeroTitle>
