@@ -33,9 +33,15 @@ export const PanelContents = styled.div`
   flex-direction: column;
   justify-content: center;
   color: white;
+  gap: 0.5rem;
+
+  & p{
+    height: 50%;
+    overflow: scroll;
+  }
 
   & h1{
-    font-size: 2rem;
+    font-size: 1.5rem;
 
     @media ${props => props.theme.device.laptop} {
       font-size: 2.5rem;
