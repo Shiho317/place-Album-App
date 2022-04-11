@@ -4,18 +4,19 @@ import Map, { Marker, Popup } from 'react-map-gl';
 import { 
   AlbumInputWrapper, 
   AlbumWrapper, 
+  Card, 
   RatingWrapper 
 } from './Album.style';
 import { AiFillStar } from 'react-icons/ai';
 import { MdLocationPin } from 'react-icons/md';
-import { IoMdStarOutline, IoMdStar } from 'react-icons/io';
+import { IoMdStar } from 'react-icons/io';
 import axios from 'axios';
 import { AppContext } from '../../App';
 import FileBase64 from 'react-file-base64';
 
 const Album = () => {
 
-  const { currentName } = useContext(AppContext);
+  const { currentName, setLoggedIn } = useContext(AppContext);
 
   const mapboxToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -103,7 +104,8 @@ const Album = () => {
       }
     };
     getPins();
-  },[])
+    setLoggedIn(true)
+  },[setLoggedIn])
 
   return (
     <AlbumWrapper>
@@ -123,6 +125,7 @@ const Album = () => {
               offsetLeft={-3.5 * viewPort.zoom}
               offsetTop={-7 * viewPort.zoom}>
               <MdLocationPin 
+                style={{fontSize: '2rem', color: 'red'}}
                 onClick={() => handleMakerClick(pin._id, pin.lat, pin.long)}/>
             </Marker>
             {pin._id === currentPlacedId && (
@@ -130,25 +133,31 @@ const Album = () => {
                 key={pin._id}
                 latitude={pin.lat}
                 longitude={pin.long}
+                style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
                 closeButton={true}
                 closeOnClick={false}
                 onClose={() => setCurrentPlacedId(null)}>
-                <div className='card'>
-                  <img src={pin.images} alt='album-img'/>
+                <Card>
+                  <div className='album-image'>
+                    <img src={pin.images} alt='album-img'/>
+                  </div>
                   <label>Place</label>
-                  <h4>{pin.title}</h4>
+                  <h3>{pin.title}</h3>
                   <label>Review</label>
                   <div>
                     {Array(pin.rating).fill(<IoMdStar/>)}
                   </div>
-                  <div>Date: </div>
-                </div>
+                  <label>Memo</label>
+                  <h4>{pin.desc}</h4>
+                  <div>Date: {pin.date}</div>
+                </Card>
               </Popup>
             )}
           </div>
         ))}
       </Map>
       <AlbumInputWrapper>
+        <h1>{currentName}'s album</h1>
         <form onSubmit={albumSubmit}>
           <input type='text' id='placename' name='placename' placeholder='PLACE' onChange={(e) => setIsAdress(e.target.value)}/>
           <input type='text' id='title' name='title' placeholder='TITLE' onChange={(e) => setTitle(e.target.value)}/>

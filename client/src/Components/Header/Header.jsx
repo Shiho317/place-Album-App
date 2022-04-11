@@ -5,7 +5,14 @@ import { HeaderNav, HeaderWrapper } from './Header.style'
 
 const Header = () => {
 
-  const { loggedIn } = useContext(AppContext);
+  const { loggedIn, setLoggedIn, setCurrentName, myStorage } = useContext(AppContext);
+
+  const loggedOut = () => {
+    setLoggedIn(false);
+    setCurrentName('');
+    myStorage.setItem("user", '');
+    alert("You have successfully logged out.");
+  }
 
   return (
     <HeaderWrapper>
@@ -13,7 +20,7 @@ const Header = () => {
       <HeaderNav>
         <li>
         {loggedIn ? (
-          <Link to='/login'>
+          <Link to='/' onClick={loggedOut}>
             LOGOUT
           </Link>
         ) : (

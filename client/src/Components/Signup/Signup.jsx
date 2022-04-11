@@ -15,7 +15,6 @@ const Signup = () => {
   const userNameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const comfirmRef = useRef(null);
   const [ isImageIcon, setIsImageIcon ] = useState('');
 
   const signupSubmit = async(e) => {
@@ -28,14 +27,19 @@ const Signup = () => {
       image: isImageIcon,
     };
 
-    if(comfirmRef === passwordRef){
-      try {
-        await axios.post("http://localhost:8888/users/signup", newUser);
-        alert("You have successfully created account.")
-      } catch (error) {
-        console.log(error);
-        alert("Something went wrong!")
-      }
+    try {
+      await axios.post("http://localhost:8888/api/users/signup", newUser);
+      userNameRef.current.value = '';
+      emailRef.current.value = '';
+      passwordRef.current.value = '';
+      setIsImageIcon('');
+      alert("You have successfully created account.");
+      setTimeout(() => {
+        window.location.href = '/login'
+      },2000)
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong!")
     }
   }
 
@@ -50,8 +54,7 @@ const Signup = () => {
         <SignupForm onSubmit={signupSubmit}>
           <input type='text' id='name' placeholder='NAME' ref={userNameRef}/>
           <input type='email' id='email' placeholder='EMAIL' ref={emailRef}/>
-          <input type='password' id='password' placeholder='PASSWORD' min='6' ref={passwordRef}/>
-          <input type='text' id='confirm' placeholder='CONFIRM PASSWORD' ref={comfirmRef}/>
+          <input type='text' id='password' placeholder='PASSWORD' min='6' ref={passwordRef}/>
           <FileBase64
             type="file"
             multiple={false}
