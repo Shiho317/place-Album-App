@@ -36,7 +36,7 @@ const HeroGuide = () => {
           <p>In the place you pinned, you can leave a photo and reviews.</p>
         </VerticalTimelineElement>
       </VerticalTimeline>
-      <Link to='/search'>
+      <Link to='/login'>
         <button>Start Now</button>
       </Link>
     </GuideWrapper>
