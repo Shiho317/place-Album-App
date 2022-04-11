@@ -1,82 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useState } from 'react';
+import { 
+  BrowserRouter as Router,
+  Routes,
+  Route 
+} from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './styles/Theme.style';
 import './App.css';
+import Footer from './Components/Footer/Footer';
+import Header from './Components/Header/Header';
+import Hero from './Components/Hero/Hero';
+import Signup from './Components/Signup/Signup';
+import Login from './Components/Login/Login';
+import Album from './Components/Album/Album';
+import { GlobalStyle } from './styles/Global.style';
+
+export const AppContext = createContext();
+
 
 function App() {
 
-  const AppID = process.env.REACT_APP_APP_ID;
-  const ApiKey = process.env.REACT_APP_API_KEY;
+  const myStorage = window.localStorage;
+  const [ currentName, setCurrentName ] = useState(myStorage.getItem("user"));
 
-  const getDatas = (url, method, body) => {
-
-    const datas = fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-        "X-Application-Id": AppID,
-        "X-Api-Key": ApiKey,
-      },
-      body: JSON.stringify(body),
-    }).then(results => {
-      return results.json()
-    })
-    return datas
-  };
-
-  const jsonDatas = {
-    "locations": [
-      {
-        "id": "Home",
-        "coords": {
-          "lat": 51.5815890,
-          "lng": -0.0775871
-        }
-      },
-      {
-        "id": "Office",
-        "coords": {
-          "lat": 51.511933,
-          "lng": -0.1277888
-        }
-      }
-    ],
-    "arrival_searches": [
-      {
-        "id": "Morning Commute",
-        "arrival_location_id": "Office",
-        "departure_location_ids": ["Home"],
-        "transportation": {
-          "type": "driving"
-        },
-        "arrival_time": "2021-09-28T09:00:00Z",
-        "properties": ["route"]
-      }
-    ]
-  }
-
-  const postLocation = async() => {
-    try {
-      const routes = await getDatas(
-        'https://api.traveltimeapp.com/v4/routes',
-        'POST',
-        jsonDatas
-      )
-      console.log(routes)
-    } catch (error) {
-      console.log(error)
-    }
-  };
-
-  useEffect(() => {
-    postLocation()
-  },[jsonDatas])
-
-
+  const [ loggedIn, setLoggedIn ] = useState(false);
 
   return (
-    <div className="App">
-      Hello
-    </div>
-  );
+    <React.Fragment>
+      <GlobalStyle/>
+      <ThemeProvider theme={theme}>
+        <AppContext.Provider value={{currentName, setCurrentName, myStorage, loggedIn, setLoggedIn}}>
+        <Router>
+          <Header/>
+          <Routes>
+            <Route path='/' element={<Hero/>}/>
+            <Route path='/signup' element={<Signup/>}/>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/album' element={<Album/>}/>
+          </Routes>
+          <Footer/>
+        </Router>
+        </AppContext.Provider>
+      </ThemeProvider>
+    </React.Fragment>
+  )
 }
 
 export default App;
