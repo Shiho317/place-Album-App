@@ -28,7 +28,7 @@ const Signup = () => {
     };
 
     try {
-      await axios.post("http://localhost:8888/api/users/signup", newUser);
+      await axios.post("/api/users/signup", newUser);
       userNameRef.current.value = '';
       emailRef.current.value = '';
       passwordRef.current.value = '';
