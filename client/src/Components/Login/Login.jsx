@@ -18,7 +18,7 @@ const Login = () => {
       password: passwordRef.current.value,
     };
     try {
-      const res = await axios.post("http://localhost:8888/api/users/login", user);
+      const res = await axios.post("/api/users/login", user);
       setCurrentName(res.data.username);
       myStorage.setItem("user", res.data.username);
       setLoggedIn(true);
