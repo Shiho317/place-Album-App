@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/api/users', userRoute);
-app.use('/api/pins', pinRoute);
+app.use('/album/pins', pinRoute);
 app.use(cors());
 
 if(process.env.NODE_ENV === 'production'){
