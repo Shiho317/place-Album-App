@@ -14,10 +14,6 @@ import axios from 'axios';
 import { AppContext } from '../../App';
 import FileBase64 from 'react-file-base64';
 
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
-import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
-mapboxgl.workerClass = MapboxWorker;
-
 const Album = () => {
 
   const { currentName, setLoggedIn } = useContext(AppContext);
