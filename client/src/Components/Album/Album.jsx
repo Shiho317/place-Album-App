@@ -14,10 +14,9 @@ import axios from 'axios';
 import { AppContext } from '../../App';
 import FileBase64 from 'react-file-base64';
 
-import mapboxgl from 'mapbox-gl';
-
-// eslint-disable-next-line import/no-webpack-loader-syntax
-mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
+mapboxgl.workerClass = MapboxWorker;
 
 const Album = () => {
 
