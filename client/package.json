@@ -17,7 +17,8 @@
     "react-scripts": "5.0.0",
     "react-vertical-timeline-component": "^3.5.2",
     "styled-components": "^5.3.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "worker-loader": "^3.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
