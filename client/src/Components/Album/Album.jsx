@@ -87,7 +87,7 @@ const Album = () => {
     };
 
     try {
-      const res = await axios.post("/pins", newPin);
+      const res = await axios.post("/api/pins", newPin);
       setPins([...pins, res.data]);
     } catch (error) {
       console.log(error)
@@ -97,8 +97,9 @@ const Album = () => {
   useEffect(() => {
     const getPins = async() => {
       try {
-        const allPins = await axios.get("/pins")
+        const allPins = await axios.get("/api/pins")
         setPins(allPins.data);
+        console.log(allPins.data)
       } catch (error) {
         console.log(error)
       }
