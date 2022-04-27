@@ -104,7 +104,6 @@ const Album = () => {
       try {
         const allPins = await axios.get("/api/pins")
         setPins(allPins.data);
-        console.log(allPins.data)
       } catch (error) {
         console.log(error)
       }
