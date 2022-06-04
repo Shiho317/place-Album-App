@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const PinSchema = new mongoose.Schema(
   {
-    username: {
+    useremail: {
       type: String,
-      required: true,
+      required: true
     },
     title: {
       type: String,
